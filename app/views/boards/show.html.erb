@@ -1,0 +1,9 @@
+<%= @board.title %>
+
+<% @board.lists.each do |list|%>
+  <%= list.title %>
+
+  <% list.cards.each do |card| %>
+    <%= card.title %>
+  <% end %>
+<% end %>
