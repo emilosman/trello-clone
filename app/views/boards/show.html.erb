@@ -1,18 +1,15 @@
 <div id="app">
-  <p>{{ message }}</p>
+  <div class="row">
 
-  <%= @board.title %>
+    <div class="col-3">
+      <draggable tag="ul" v-model="list" @end="onEnd">
+        <transition-group type="transition" :name="'flip-list'">
+          <li class="list-group-item" v-for="element in list" :key="element.order">
+            {{element.name}}
+          </li>
+        </transition-group>
+      </draggable>
+    </div>
 
-  <% @board.lists.each do |list|%>
-    <%= list.title %>
-
-    <draggable draggable=".item">
-      <% list.cards.each do |card| %>
-          <div class="item">
-            <%= card.title %>
-          </div>
-      <% end %>
-    </draggable>
-
-  <% end %>
+  </div>
 </div>

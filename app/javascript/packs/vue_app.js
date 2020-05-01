@@ -57,15 +57,40 @@ import TurbolinksAdapter from 'vue-turbolinks'
 import Vue from 'vue/dist/vue.esm'
 import App from '../app.vue'
 import draggable from 'vuedraggable'
+import axios from 'axios'
 
 Vue.use(TurbolinksAdapter)
 
 document.addEventListener('turbolinks:load', () => {
+  const message = [
+    "item 1",
+    "item 2",
+    "item 3",
+    "item 4",
+    "item 5",
+    "item 6",
+    "item 7"
+  ];
+
   const app = new Vue({
     el: '#app',
     data: () => {
       return {
-        message: "Can you say hello?"
+        list: message.map((name, index) => {
+          return { name, order: index + 1, fixed: false };
+        }),
+      }
+    },
+    mounted () {
+      axios
+        .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+        .then(response => (
+          console.log(response)
+        ))
+    },
+    methods: {
+      onEnd() {
+        console.log('onEnd')
       }
     },
     components: { App, draggable }
