@@ -1,9 +1,18 @@
-<%= @board.title %>
+<div id="app">
+  <p>{{ message }}</p>
 
-<% @board.lists.each do |list|%>
-  <%= list.title %>
+  <%= @board.title %>
 
-  <% list.cards.each do |card| %>
-    <%= card.title %>
+  <% @board.lists.each do |list|%>
+    <%= list.title %>
+
+    <draggable draggable=".item">
+      <% list.cards.each do |card| %>
+          <div class="item">
+            <%= card.title %>
+          </div>
+      <% end %>
+    </draggable>
+
   <% end %>
-<% end %>
+</div>
