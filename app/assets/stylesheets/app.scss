@@ -16,3 +16,11 @@ html {
 .list-group-item {
   cursor: pointer;
 }
+
+input.transparent {
+  background: none;
+  border: none;
+  &:focus {
+    background: white;
+  }
+}

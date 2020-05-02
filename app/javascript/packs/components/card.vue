@@ -7,6 +7,7 @@
         </li>
       </transition-group>
     </draggable>
+
     <div v-if="showCard">
       <div class="modal">
         <div class="modal-dialog">
@@ -15,7 +16,7 @@
               <div class="modal-header">
                 <h5 class="modal-title">
                   <div class="input-group">
-                    <input @change="updateCard(card)" v-model="card.title" class="form-control"/>
+                    <input @change="updateCard(card)" v-model="card.title" class="form-control transparent"/>
                   </div>
                 </h5>
                 <button type="button" class="close" aria-label="Close" @click="closeCard">

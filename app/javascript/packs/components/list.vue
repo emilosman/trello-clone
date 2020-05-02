@@ -4,7 +4,7 @@
       <div class="col-2" v-for="list in lists" :key="list.position">
         <div class="card bg-light mr-2">
           <div class="card-header">
-            <input @change="updateList(list)" type="text" v-model="list.title"/>
+            <input @change="updateList(list)" type="text" v-model="list.title" class="transparent"/>
           </div>
           <card :cards="list.cards"></card>
           <card-footer :list=list></card-footer>

@@ -1,9 +1,11 @@
 <div class="container-fluid" id="app">
   <div class="row">
     <div class="col-12">
-      <h1>
-        <input @change="updateBoard" type="text" v-model="boardTitle"/>
-      </h1>
+      <div class="input-group">
+        <h1>
+          <input @change="updateBoard" type="text" v-model="boardTitle" class="form-control transparent"/>
+        </h1>
+      </div>
     </div>
   </div>
 
