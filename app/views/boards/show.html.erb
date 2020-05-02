@@ -1,5 +1,5 @@
 <div id="app">
-  {{title}}
+  {{boardTitle}}
 
     <div class="row">
 
@@ -13,10 +13,33 @@
           </transition-group>
         </draggable>
 
-        <li class="list-group-item" @click="addItem(list)">
-          add item
+        <li class="list-group-item">
+          <div v-if="showNewCard">
+            <input type="text" v-model="newCard.title"/>
+            <a class="btn btn-success" @click="createCard(list)">
+              New card
+            </a>
+          </div>
+          <div v-else>
+            <a class="btn btn-secondary" @click="openNewCard">
+              + add item
+            </a>
+          </div>
         </li>
       </div>
 
+  </div>
+
+  <div v-if="showCard">
+    <div v-if="card">
+      <input v-model="card.title"/>
+      <input v-model="card.description"/>
+      <a class="btn btn-success" @click="updateCard(card)">
+        Save
+      </a>
+    </div>
+    <div v-else>
+      loading
+    </div>
   </div>
 </div>

@@ -9,6 +9,8 @@ import axios from 'axios'
 Vue.use(TurbolinksAdapter)
 
 document.addEventListener('turbolinks:load', () => {
+  axios.defaults.headers.common['X-CSRF-Token'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
   const cards = [
     "item 1",
     "item 2",
@@ -23,32 +25,74 @@ document.addEventListener('turbolinks:load', () => {
     el: '#app',
     data: () => {
       return {
-        title: null,
+        showCard: false,
+        showNewCard: false,
+        newCard: {
+          title: null,
+          position: null,
+          list_id: {
+            $oid: null
+          }
+        },
+        card: null,
+        boardTitle: null,
         lists: []
       }
     },
     mounted () {
       axios
-        .get('http://localhost:3000/api/boards/5e9c292318338d0f425fa0fb')
+        .get('/api/boards/5e9c292318338d0f425fa0fb')
         .then(response => (
-          console.log(response.data),
-          this.title = response.data.title,
+          this.boardTitle = response.data.title,
           this.lists = response.data.lists,
           console.log(this.lists)
         ))
     },
     methods: {
+      //movement
       onMove(item) {
         console.log(item)
       },
       onEnd(e) {
         console.log(e)
       },
-      addItem(list) {
-        console.log(list)
+
+      //new card
+      openNewCard() {
+        this.showNewCard = !this.showNewCard
       },
+      createCard(list) {
+        this.newCard.list_id.$oid = list._id.$oid
+        this.newCard.position = list.cards.length
+
+        axios
+          .post(`/api/cards`, {
+            list_id: this.newCard.list_id.$oid,
+            position: this.newCard.position,
+            title: this.newCard.title
+          })
+          .then(response => (
+            this.newCard = response.data,
+            list.cards.push(this.newCard)
+          ))
+      },
+
+      //edit card
       openCard(card) {
-        console.log(card)
+        this.showCard = true
+        this.card = card
+      },
+      updateCard(card) {
+        axios
+        .patch(`/api/cards/${card._id.$oid}`, {
+          list_id: card.list_id.$oid,
+          position: card.position,
+          title: card.title,
+          description: card.description
+        })
+        .then(response => (
+          console.log(response)
+        ))
       }
     },
     components: { App, draggable }
