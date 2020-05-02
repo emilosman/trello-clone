@@ -7,6 +7,9 @@
           <div v-if="card.description">
             =
           </div>
+          <div v-if="card.checklist" class="small">
+            [{{card.checklist.items.filter((item)=> item.done == true).length}}/{{card.checklist.items.length}}]
+          </div>
           <div>
             <div class="badge badge-pill mr-1 mb-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
               {{label}}
