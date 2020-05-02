@@ -56,7 +56,7 @@
                     <div class="input-group">
                       <textarea @change="updateCard(card)" v-model="card.description" class="form-control mb-4"></textarea>
                     </div>
-                    <div v-if="card.checklist" class="mb-4">
+                    <div v-if="card.checklist && card.checklist.items" class="mb-4">
                       <card-checklist :checklist="card.checklist" v-on:change="updateCard(card)"></card-checklist>
                     </div>
                   </div>
@@ -160,7 +160,7 @@
         this.updateCard(this.card)
       },
       addChecklist(card) {
-        if (!card.checklist) {
+        if (! (card.checklist && card.checklist.items) ) {
           card.checklist = {
             items: [
               {
