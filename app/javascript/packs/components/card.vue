@@ -7,8 +7,8 @@
           <div v-if="card.description">
             =
           </div>
-          <div v-if="card.checklist" class="small">
-            ☑[{{card.checklist.items.filter((item)=> item.done == true).length}}/{{card.checklist.items.length}}]
+          <div v-if="card.checklist && card.checklist.items" class="small" v-bind:class="{'badge badge-pill badge-success': card.checklist.items.filter((item)=> item.done == true).length == card.checklist.items.length}">
+            ✓[{{card.checklist.items.filter((item)=> item.done == true).length}}/{{card.checklist.items.length}}]
           </div>
           <div>
             <div class="badge badge-pill mr-1 mb-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
@@ -40,7 +40,7 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col-9">
-                    <div v-if="card.labels.length > 0" class="d-inline-block mr-4 mb-4">
+                    <div v-if="card.labels && card.labels.length > 0" class="d-inline-block mr-4 mb-4">
                       <h6>Labels</h6>
                       <span class="badge badge-pill mr-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
                         {{label}}

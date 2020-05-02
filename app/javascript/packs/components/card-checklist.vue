@@ -31,7 +31,7 @@
     },
     computed: {
       progressValue: function () {
-        return this.checklist.items.filter((item)=> item.done == true).length / this.checklist.items.length * 100
+        return Math.round( this.checklist.items.filter((item)=> item.done == true).length / this.checklist.items.length * 100 )
       }
     },
     components: {
