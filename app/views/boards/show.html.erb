@@ -1,15 +1,22 @@
 <div id="app">
-  <div class="row">
+  {{title}}
 
-    <div class="col-3">
-      <draggable tag="ul" v-model="list" @end="onEnd">
-        <transition-group type="transition" :name="'flip-list'">
-          <li class="list-group-item" v-for="element in list" :key="element.order">
-            {{element.name}}
-          </li>
-        </transition-group>
-      </draggable>
-    </div>
+    <div class="row">
+
+      <div class="col-3" v-for="list in lists">
+        {{list.title}}
+        <draggable v-model="list.cards" :move="onMove" @end="onEnd">
+          <transition-group type="transition" :name="'card-list'">
+            <li class="list-group-item" v-for="card in list.cards" :key="card.position" @click="openCard(card)">
+              {{card.title}}
+            </li>
+          </transition-group>
+        </draggable>
+
+        <li class="list-group-item" @click="addItem(list)">
+          add item
+        </li>
+      </div>
 
   </div>
 </div>

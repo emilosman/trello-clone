@@ -6,4 +6,8 @@ Rails.application.routes.draw do
   resources :cards
 
   root to: 'boards#index'
+
+  namespace :api do
+      resources :boards
+  end
 end
