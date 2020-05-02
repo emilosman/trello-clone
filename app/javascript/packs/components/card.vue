@@ -62,8 +62,9 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </button>
-                      <div v-if="showLabelMenu" class="dropdown-menu">
+                      <div v-if="showLabelMenu" class="dropdown-menu py-0">
                         <a v-for="label in labels" class="dropdown-item text-white" v-bind:class="'bg-' + label" @click="toggleLabel(label)">
+                          <span v-if="card.labels.indexOf(label) > -1" >✓</span>
                           {{label}}
                         </a>
                       </div>
