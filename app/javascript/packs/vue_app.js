@@ -59,7 +59,7 @@ document.addEventListener('turbolinks:load', () => {
       },
 
       //new card
-      openNewCard() {
+      toggleNewCard() {
         this.showNewCard = !this.showNewCard
       },
       createCard(list) {
@@ -74,7 +74,8 @@ document.addEventListener('turbolinks:load', () => {
           })
           .then(response => (
             this.newCard = response.data,
-            list.cards.push(this.newCard)
+            list.cards.push(this.newCard),
+            this.showNewCard = false
           ))
       },
 
@@ -82,6 +83,9 @@ document.addEventListener('turbolinks:load', () => {
       openCard(card) {
         this.showCard = true
         this.card = card
+      },
+      closeCard() {
+        this.showCard = false
       },
       updateCard: debounce((card) => {
         axios
@@ -94,7 +98,19 @@ document.addEventListener('turbolinks:load', () => {
         .then(response => (
           console.log(response)
         ))
-      }, 250)
+      }, 250),
+
+      //edit list
+      updateList: debounce((list) => {
+        axios
+        .patch(`/api/lists/${list._id.$oid}`, {
+          position: list.position,
+          title: list.title,
+        })
+        .then(response => (
+          console.log(response)
+        ))
+      }, 250),
     },
     components: { App, draggable }
   })

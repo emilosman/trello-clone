@@ -1,42 +1,75 @@
-<div id="app">
-  {{boardTitle}}
+<div class="container-fluid" id="app">
+  <div class="row">
+    <div class="col-12">
+      <h1>
+        {{boardTitle}}
+      </h1>
+    </div>
+  </div>
 
-    <div class="row">
-
-      <div class="col-3" v-for="list in lists">
-        {{list.title}}
+  <div class="row px-2">
+    <div class="card mr-2" style="width: 18rem;" v-for="list in lists">
+      <div class="card-body">
+        <h5 class="card-title">
+          <div class="input-group">
+            <input @change="updateList(list)" type="text" v-model="list.title">
+          </div>
+        </h5>
         <draggable v-model="list.cards" :move="onMove" @end="onEnd">
           <transition-group type="transition" :name="'card-list'">
-            <li class="list-group-item" v-for="card in list.cards" :key="card.position" @click="openCard(card)">
+            <li class="list-group-item mb-2" v-for="card in list.cards" :key="card.position" @click="openCard(card)">
               {{card.title}}
             </li>
           </transition-group>
         </draggable>
 
-        <li class="list-group-item">
-          <div v-if="showNewCard">
-            <input type="text" v-model="newCard.title"/>
-            <a class="btn btn-success" @click="createCard(list)">
-              New card
-            </a>
+        <div v-if="showNewCard">
+          <div class="input-group">
+            <input type="text" v-model="newCard.title" class="form-control mb-2" placeholder="Add card title"/>
           </div>
-          <div v-else>
-            <a class="btn btn-secondary" @click="openNewCard">
-              + add item
-            </a>
-          </div>
-        </li>
+          <button class="btn btn-success" @click="createCard(list)">
+            New card
+          </button>
+          <button type="button" class="close" aria-label="Close" @click="toggleNewCard">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div v-else>
+          <button class="btn btn-light" @click="toggleNewCard">
+            + Add card
+          </button>
+        </div>
       </div>
-
+    </div>
   </div>
 
   <div v-if="showCard">
-    <div v-if="card">
-      <input @change="updateCard(card)" v-model="card.title"/>
-      <input @change="updateCard(card)" v-model="card.description"/>
+    <div class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div v-if="card">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                <div class="input-group">
+                  <input @change="updateCard(card)" v-model="card.title" class="form-control"/>
+                </div>
+              </h5>
+              <button type="button" class="close" aria-label="Close" @click="closeCard">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="input-group">
+                <textarea @change="updateCard(card)" v-model="card.description" class="form-control"></textarea>
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            loading
+          </div>
+        </div>
+      </div>
     </div>
-    <div v-else>
-      loading
-    </div>
+    <div class="modal-backdrop show"></div>
   </div>
 </div>

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :boards
     resources :cards
+    resources :lists
   end
 
   root to: 'boards#index'

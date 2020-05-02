@@ -1,3 +1,18 @@
 @import 'bootstrap/bootstrap-grid';
 @import 'bootstrap/bootstrap-reboot';
 @import 'bootstrap/bootstrap';
+
+
+$background-color: #0178bf;
+
+html {
+  background: $background-color;
+}
+
+.container-fluid {
+  background: $background-color;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
