@@ -137,7 +137,8 @@
           title: card.title,
           description: card.description,
           labels: card.labels,
-          checklist: card.checklist
+          checklist: card.checklist,
+          due_date: card.due_date
         })
         .then(response => (
           console.log(response)

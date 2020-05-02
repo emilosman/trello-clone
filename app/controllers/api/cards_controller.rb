@@ -32,7 +32,7 @@ module Api
     end
 
     def permitted_params
-      params.require(:card).permit(:list_id, :position, :title, :description, :id, checklist: {}, labels: [])
+      params.require(:card).permit(:list_id, :position, :title, :description, :id, :due_date, checklist: {}, labels: [])
     end
   end
 end
