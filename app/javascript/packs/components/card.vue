@@ -2,13 +2,15 @@
   <div>
     <draggable tag="ul" class="list-group list-group-flush" :move="onMoveCard" @end="onEnd">
       <transition-group type="transition" :name="'card-list'">
-        <li class="list-group-item mx-1 mb-2" v-for="card in cards" :key="card.position" @click="openCard(card)">
+        <li class="list-group-item list-group-item-action mb-2" v-for="card in cards" :key="card.position" @click="openCard(card)">
           {{card.title}}
           <div v-if="card.description">
             =
           </div>
-          <div class="badge badge-pill mr-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
-            {{label}}
+          <div>
+            <div class="badge badge-pill mr-1 mb-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
+              {{label}}
+            </div>
           </div>
           <div class="small">
             {{card.due_date}}
@@ -54,14 +56,13 @@
                   </div>
                   <div class="col-3">
                     <div class="dropdown">
-                      <button class="btn btn-light btn-block text-left mb-2" @click="toggleLabelMenu">Labels</button>
+                      <button class="btn btn-light btn-block text-left mb-2" @click="toggleLabelMenu">
+                        Labels
+                        <button type="button" class="close" v-if="showLabelMenu">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </button>
                       <div v-if="showLabelMenu" class="dropdown-menu">
-                        <span class="dropdown-header">
-                          Labels
-                          <button type="button" class="close" aria-label="Close" @click="toggleLabelMenu">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </span>
                         <a v-for="label in labels" class="dropdown-item text-white" v-bind:class="'bg-' + label" @click="toggleLabel(label)">
                           {{label}}
                         </a>
