@@ -32,11 +32,8 @@
 
   <div v-if="showCard">
     <div v-if="card">
-      <input v-model="card.title"/>
-      <input v-model="card.description"/>
-      <a class="btn btn-success" @click="updateCard(card)">
-        Save
-      </a>
+      <input @change="updateCard(card)" v-model="card.title"/>
+      <input @change="updateCard(card)" v-model="card.description"/>
     </div>
     <div v-else>
       loading

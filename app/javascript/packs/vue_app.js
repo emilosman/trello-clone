@@ -5,6 +5,7 @@ import Vue from 'vue/dist/vue.esm'
 import App from '../app.vue'
 import draggable from 'vuedraggable'
 import axios from 'axios'
+import debounce from 'debounce'
 
 Vue.use(TurbolinksAdapter)
 
@@ -82,7 +83,7 @@ document.addEventListener('turbolinks:load', () => {
         this.showCard = true
         this.card = card
       },
-      updateCard(card) {
+      updateCard: debounce((card) => {
         axios
         .patch(`/api/cards/${card._id.$oid}`, {
           list_id: card.list_id.$oid,
@@ -93,7 +94,7 @@ document.addEventListener('turbolinks:load', () => {
         .then(response => (
           console.log(response)
         ))
-      }
+      }, 250)
     },
     components: { App, draggable }
   })
