@@ -62,6 +62,7 @@
                   </div>
 
                   <div class="col-3">
+                    <h6>Card Options</h6>
                     <div class="dropdown">
                       <button class="btn btn-light btn-block text-left mb-2" @click="toggleLabelMenu">
                         Labels

@@ -6,7 +6,7 @@
           <input type="checkbox" v-on:change="$emit('change')" v-model="item.done">
         </div>
       </div>
-      <input v-model="item.title" v-on:change="$emit('change')" text="text" class="form-control" placeholder="Add checklist item"/>
+      <input v-model="item.title" v-on:change="$emit('change')" v-bind:class="{'checklist-item--done' : item.done}" text="text" class="form-control" placeholder="Add checklist item"/>
     </div>
   </div>
 </template>

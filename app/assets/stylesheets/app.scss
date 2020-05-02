@@ -24,3 +24,9 @@ input.transparent {
     background: white;
   }
 }
+
+.checklist-item--done {
+  &:not(:focus) {
+    text-decoration: line-through;
+  }
+}
