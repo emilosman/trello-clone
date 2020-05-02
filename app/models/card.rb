@@ -4,6 +4,7 @@ class Card
   field :description, type: String
   field :position, type: Integer
   field :labels, type: Array, default: []
+  field :due_date, type: String
 
   belongs_to :list
 end

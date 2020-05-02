@@ -24,6 +24,7 @@ module Api
         list_id: params[:list_id],
         position: params[:position],
         labels: params[:labels],
+        due_date: params[:due_date],
       )
 
       render json: card, status: 200

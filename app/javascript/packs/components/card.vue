@@ -10,6 +10,9 @@
           <div class="badge badge-pill mr-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
             {{label}}
           </div>
+          <div class="small">
+            {{card.due_date}}
+          </div>
         </li>
       </transition-group>
     </draggable>
@@ -27,6 +30,9 @@
                   <div class="badge badge-pill mr-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
                     {{label}}
                   </div>
+                  <span class="small">
+                    {{card.due_date}}
+                  </span>
                 </h5>
                 <button type="button" class="close" aria-label="Close" @click="closeCard">
                   <span aria-hidden="true">&times;</span>
@@ -34,12 +40,12 @@
               </div>
               <div class="modal-body">
                 <div class="row">
-                  <div class="col-10">
+                  <div class="col-9">
                     <div class="input-group">
                       <textarea @change="updateCard(card)" v-model="card.description" class="form-control"></textarea>
                     </div>
                   </div>
-                  <div class="col-2">
+                  <div class="col-3">
                     <div class="dropdown">
                       <button class="btn btn-light mb-2" @click="toggleLabelMenu">Labels</button>
                       <div v-if="showLabelMenu" class="dropdown-menu">
@@ -53,6 +59,12 @@
                           {{label}}
                         </a>
                       </div>
+                    </div>
+                    <div class="dropdown">
+                      <a class="btn btn-light text-left mb-2">
+                        Due Date
+                        <date-pick v-model="card.due_date" :pickTime="true" :format="'YYYY-MM-DD HH:mm'"></date-pick>
+                      </a>
                     </div>
                     <button class="btn btn-danger mb-2">Delete</button>
                   </div>
@@ -73,7 +85,9 @@
 <script>
   import draggable from 'vuedraggable'
   import axios from 'axios'
-  import debounce from 'debounce'  
+  import debounce from 'debounce'
+  import DatePick from 'vue-date-pick';
+  import 'vue-date-pick/dist/vueDatePick.css';
 
   export default {
     props: {
@@ -131,7 +145,8 @@
     components: {
       draggable,
       axios,
-      debounce
+      debounce,
+      DatePick
     }
   }
 </script>
