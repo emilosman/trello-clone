@@ -2,27 +2,27 @@
   <div class="row">
     <div class="col-12">
       <h1>
-        {{boardTitle}}
+        <input @change="updateBoard" type="text" v-model="boardTitle"/>
       </h1>
     </div>
   </div>
 
   <div class="row px-2">
-    <div class="card mr-2" style="width: 18rem;" v-for="list in lists">
-      <div class="card-body">
-        <h5 class="card-title">
-          <div class="input-group">
-            <input @change="updateList(list)" type="text" v-model="list.title">
-          </div>
-        </h5>
-        <draggable v-model="list.cards" :move="onMove" @end="onEnd">
-          <transition-group type="transition" :name="'card-list'">
-            <li class="list-group-item mb-2" v-for="card in list.cards" :key="card.position" @click="openCard(card)">
-              {{card.title}}
-            </li>
-          </transition-group>
-        </draggable>
+    <div class="col-2" v-for="list in lists">
+      <div class="card bg-light mr-2">
+        <div class="card-header">
+          <input @change="updateList(list)" type="text" v-model="list.title"/>
+        </div>
+      </h5>
+      <draggable tag="ul" class="list-group list-group-flush" v-model="list.cards" :move="onMove" @end="onEnd">
+        <transition-group type="transition" :name="'card-list'">
+          <li class="list-group-item mx-1 mb-2" v-for="card in list.cards" :key="card.position" @click="openCard(card)">
+            {{card.title}}
+          </li>
+        </transition-group>
+      </draggable>
 
+      <div class="card-footer">
         <div v-if="showNewCard">
           <div class="input-group">
             <input type="text" v-model="newCard.title" class="form-control mb-2" placeholder="Add card title"/>

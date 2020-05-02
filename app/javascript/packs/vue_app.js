@@ -26,6 +26,7 @@ document.addEventListener('turbolinks:load', () => {
     el: '#app',
     data: () => {
       return {
+        boardId: "5e9c292318338d0f425fa0fb",
         showCard: false,
         showNewCard: false,
         newCard: {
@@ -42,7 +43,7 @@ document.addEventListener('turbolinks:load', () => {
     },
     mounted () {
       axios
-        .get('/api/boards/5e9c292318338d0f425fa0fb')
+        .get(`/api/boards/${this.boardId}`)
         .then(response => (
           this.boardTitle = response.data.title,
           this.lists = response.data.lists,
@@ -111,6 +112,18 @@ document.addEventListener('turbolinks:load', () => {
           console.log(response)
         ))
       }, 250),
+
+      //edit board
+      updateBoard() {
+        console.log(this.boardId)
+        axios
+          .patch(`/api/boards/${this.boardId}`, {
+            title: this.boardTitle,
+          })
+          .then(response => (
+            console.log(response)
+          ))
+      }
     },
     components: { App, draggable }
   })
