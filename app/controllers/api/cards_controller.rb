@@ -22,7 +22,8 @@ module Api
         title: params[:title],
         description: params[:description],
         list_id: params[:list_id],
-        position: params[:position]
+        position: params[:position],
+        labels: params[:labels],
       )
 
       render json: card, status: 200

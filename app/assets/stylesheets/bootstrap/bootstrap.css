@@ -3220,7 +3220,7 @@ input[type="button"].btn-block {
   top: 100%;
   left: 0;
   z-index: 1000;
-  display: none;
+  display: block;
   float: left;
   min-width: 10rem;
   padding: 0.5rem 0;
