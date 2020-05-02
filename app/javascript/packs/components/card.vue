@@ -51,9 +51,13 @@
                     </div>
                     <h6>Description</h6>
                     <div class="input-group">
-                      <textarea @change="updateCard(card)" v-model="card.description" class="form-control"></textarea>
+                      <textarea @change="updateCard(card)" v-model="card.description" class="form-control mb-4"></textarea>
+                    </div>
+                    <div v-if="card.checklist" class="mb-4">
+                      <card-checklist :checklist="card.checklist" v-on:change="updateCard(card)"></card-checklist>
                     </div>
                   </div>
+
                   <div class="col-3">
                     <div class="dropdown">
                       <button class="btn btn-light btn-block text-left mb-2" @click="toggleLabelMenu">
@@ -69,12 +73,11 @@
                         </a>
                       </div>
                     </div>
-                    <div class="dropdown">
-                      <a class="btn btn-light btn-block text-left mb-2">
-                        Due Date
-                        <date-pick v-model="card.due_date" :pickTime="true" :format="'YYYY-MM-DD HH:mm'"></date-pick>
-                      </a>
-                    </div>
+                    <button class="btn btn-light btn-block text-left mb-2" @click="addChecklist(card)">Checklist</button>
+                    <a class="btn btn-light btn-block text-left mb-2">
+                      Due Date
+                      <date-pick v-model="card.due_date" :pickTime="true" :format="'YYYY-MM-DD HH:mm'"></date-pick>
+                    </a>
                     <button class="btn btn-danger btn-block text-left mb-2">Delete</button>
                   </div>
                 </div>
@@ -97,6 +100,7 @@
   import debounce from 'debounce'
   import DatePick from 'vue-date-pick';
   import 'vue-date-pick/dist/vueDatePick.css';
+  import cardChecklist from './card-checklist'
 
   export default {
     props: {
@@ -132,7 +136,8 @@
           position: card.position,
           title: card.title,
           description: card.description,
-          labels: card.labels
+          labels: card.labels,
+          checklist: card.checklist
         })
         .then(response => (
           console.log(response)
@@ -149,13 +154,27 @@
           this.card.labels.push(label);
         }
         this.updateCard(this.card)
+      },
+      addChecklist(card) {
+        if (!card.checklist) {
+          card.checklist = {
+            items: [
+              {
+                position: 0,
+                title: null,
+                done: false
+              }
+            ]
+          }
+        }
       }
     },
     components: {
       draggable,
       axios,
       debounce,
-      DatePick
+      DatePick,
+      cardChecklist
     }
   }
 </script>

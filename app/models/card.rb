@@ -5,6 +5,7 @@ class Card
   field :position, type: Integer
   field :labels, type: Array, default: []
   field :due_date, type: String
+  field :checklist, type: Hash
 
   belongs_to :list
 end

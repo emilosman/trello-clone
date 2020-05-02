@@ -19,15 +19,20 @@ module Api
       card = Card.find params[:id]
 
       card.update_attributes(
-        title: params[:title],
-        description: params[:description],
-        list_id: params[:list_id],
-        position: params[:position],
-        labels: params[:labels],
-        due_date: params[:due_date],
+        title: permitted_params[:title],
+        description: permitted_params[:description],
+        list_id: permitted_params[:list_id],
+        position: permitted_params[:position],
+        labels: permitted_params[:labels],
+        due_date: permitted_params[:due_date],
+        checklist: permitted_params[:checklist].to_h
       )
 
       render json: card, status: 200
+    end
+
+    def permitted_params
+      params.require(:card).permit(:list_id, :position, :title, :description, :id, checklist: {}, labels: [])
     end
   end
 end

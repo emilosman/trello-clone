@@ -1,0 +1,20 @@
+<template>
+  <div>
+    <div class="input-group mb-2" v-for="item in checklistItems">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <input type="checkbox" v-on:change="$emit('change')" v-model="item.done">
+        </div>
+      </div>
+      <input v-model="item.title" v-on:change="$emit('change')" text="text" class="form-control" placeholder="Add checklist item"/>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    props: {
+      checklistItems: Array,
+    }
+  }
+</script>
