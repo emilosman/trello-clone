@@ -27,12 +27,6 @@
                   <div class="input-group">
                     <input @change="updateCard(card)" v-model="card.title" class="form-control transparent"/>
                   </div>
-                  <div class="badge badge-pill mr-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
-                    {{label}}
-                  </div>
-                  <span class="small">
-                    {{card.due_date}}
-                  </span>
                 </h5>
                 <button type="button" class="close" aria-label="Close" @click="closeCard">
                   <span aria-hidden="true">&times;</span>
@@ -41,13 +35,26 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col-9">
+                    <div v-if="card.labels.length > 0" class="d-inline-block mr-4 mb-4">
+                      <h6>Labels</h6>
+                      <span class="badge badge-pill mr-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
+                        {{label}}
+                      </span>
+                    </div>
+                    <div v-if="card.due_date" class="d-inline-block mr-4 mb-4">
+                      <h6>Due date</h6>
+                      <span class="small">
+                        {{card.due_date}}
+                      </span>
+                    </div>
+                    <h6>Description</h6>
                     <div class="input-group">
                       <textarea @change="updateCard(card)" v-model="card.description" class="form-control"></textarea>
                     </div>
                   </div>
                   <div class="col-3">
                     <div class="dropdown">
-                      <button class="btn btn-light mb-2" @click="toggleLabelMenu">Labels</button>
+                      <button class="btn btn-light btn-block text-left mb-2" @click="toggleLabelMenu">Labels</button>
                       <div v-if="showLabelMenu" class="dropdown-menu">
                         <span class="dropdown-header">
                           Labels
@@ -61,12 +68,12 @@
                       </div>
                     </div>
                     <div class="dropdown">
-                      <a class="btn btn-light text-left mb-2">
+                      <a class="btn btn-light btn-block text-left mb-2">
                         Due Date
                         <date-pick v-model="card.due_date" :pickTime="true" :format="'YYYY-MM-DD HH:mm'"></date-pick>
                       </a>
                     </div>
-                    <button class="btn btn-danger mb-2">Delete</button>
+                    <button class="btn btn-danger btn-block text-left mb-2">Delete</button>
                   </div>
                 </div>
               </div>
