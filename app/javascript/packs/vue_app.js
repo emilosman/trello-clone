@@ -52,8 +52,11 @@ document.addEventListener('turbolinks:load', () => {
     },
     methods: {
       //movement
-      onMove(item) {
-        console.log(item)
+      onMoveCard(card) {
+        console.log(card)
+      },
+      onMoveList(list) {
+        console.log(list)
       },
       onEnd(e) {
         console.log(e)
