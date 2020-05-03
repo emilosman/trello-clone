@@ -35,3 +35,11 @@ input.transparent {
   max-height: calc(100vh - 230px);
   overflow: scroll;
 }
+
+
+.board-title {
+  color: white;
+  &:focus {
+    color: black;
+  }
+}
