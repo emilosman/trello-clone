@@ -56,7 +56,14 @@
           .then(response => (
             this.newCard = response.data,
             list.cards.push(this.newCard),
-            this.showNewCard = false
+            this.showNewCard = false,
+            this.newCard = {
+              title: null,
+              position: null,
+              list_id: {
+                $oid: null
+              }
+            }
           ))
       }
     },

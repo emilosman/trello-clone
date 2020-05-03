@@ -6,7 +6,9 @@
           <div class="card-header">
             <input @change="updateList(list)" type="text" v-model="list.title" class="transparent"/>
           </div>
-          <card :cards="list.cards"></card>
+          <div class="list-body">
+            <card :cards="list.cards"></card>
+          </div>
           <card-footer :list=list></card-footer>
         </div>
       </div>

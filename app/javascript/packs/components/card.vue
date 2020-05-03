@@ -3,17 +3,17 @@
     <draggable tag="ul" class="list-group list-group-flush" :move="onMoveCard" @end="onEnd">
       <transition-group type="transition" :name="'card-list'">
         <li class="list-group-item list-group-item-action mb-2" v-for="card in cards" :key="card.position" @click="openCard(card)">
+          <div>
+            <div class="badge badge-pill mr-1 mb-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
+              {{label}}
+            </div>
+          </div>
           {{card.title}}
           <div v-if="card.description">
             =
           </div>
           <div v-if="card.checklist && card.checklist.items" class="small" v-bind:class="{'badge badge-pill badge-success': card.checklist.items.filter((item)=> item.done == true).length == card.checklist.items.length}">
             ✓[{{card.checklist.items.filter((item)=> item.done == true).length}}/{{card.checklist.items.length}}]
-          </div>
-          <div>
-            <div class="badge badge-pill mr-1 mb-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
-              {{label}}
-            </div>
           </div>
           <div class="small">
             {{card.due_date}}
@@ -46,16 +46,27 @@
                         {{label}}
                       </span>
                     </div>
+
                     <div v-if="card.due_date" class="d-inline-block mr-4 mb-4">
                       <h6>Due date</h6>
                       <span class="small">
                         {{card.due_date}}
                       </span>
                     </div>
+
                     <h6>Description</h6>
-                    <div class="input-group">
-                      <textarea @change="updateCard(card)" v-model="card.description" class="form-control mb-4"></textarea>
+                    <div v-if="card.description && !showDescriptionEditor" @click="toggleDescriptionEditor">
+                      <vue-markdown>{{card.description}}</vue-markdown>
                     </div>
+                    <div v-else>
+                      <div class="input-group">
+                        <textarea @change="updateCard(card); toggleDescriptionEditor()" v-model="card.description" class="form-control mb-2" style="min-height: 250px;"></textarea>
+                      </div>
+                      <div class="input-group" style="width: 169px;">
+                        <button @click="updateCard(card); toggleDescriptionEditor()" class="btn btn-success form-control mb-4">Save</button>
+                      </div>
+                    </div>
+
                     <div v-if="card.checklist && card.checklist.items" class="mb-4">
                       <card-checklist :checklist="card.checklist" v-on:change="updateCard(card)"></card-checklist>
                     </div>
@@ -105,6 +116,7 @@
   import DatePick from 'vue-date-pick';
   import 'vue-date-pick/dist/vueDatePick.css';
   import cardChecklist from './card-checklist'
+  import VueMarkdown from 'vue-markdown'
 
   export default {
     props: {
@@ -114,6 +126,7 @@
       return {
         showCard: false,
         showLabelMenu: false,
+        showDescriptionEditor: false,
         labels: ["success", "warning", "danger", "info", "primary"]
       }
     },
@@ -160,6 +173,9 @@
         }
         this.updateCard(this.card)
       },
+      toggleDescriptionEditor() {
+        this.showDescriptionEditor = !this.showDescriptionEditor;
+      },
       addChecklist(card) {
         if (! (card.checklist && card.checklist.items) ) {
           card.checklist = {
@@ -179,7 +195,8 @@
       axios,
       debounce,
       DatePick,
-      cardChecklist
+      cardChecklist,
+      VueMarkdown
     }
   }
 </script>
