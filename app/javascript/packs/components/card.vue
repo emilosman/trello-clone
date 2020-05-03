@@ -62,7 +62,7 @@
                       <div class="input-group">
                         <textarea @change="updateCard(card); toggleDescriptionEditor()" v-model="card.description" class="form-control mb-2" style="min-height: 250px;"></textarea>
                       </div>
-                      <div class="input-group" style="width: 169px;">
+                      <div v-if="card.description" class="input-group" style="width: 169px;">
                         <button @click="updateCard(card); toggleDescriptionEditor()" class="btn btn-success form-control mb-4">Save</button>
                       </div>
                     </div>
@@ -93,7 +93,9 @@
                       Due Date
                       <date-pick v-model="card.due_date" :pickTime="true" :format="'YYYY-MM-DD HH:mm'"></date-pick>
                     </a>
-                    <button class="btn btn-danger btn-block text-left mb-2">Delete</button>
+                    <button @click="deleteCard(card)" class="btn btn-danger btn-block text-left mb-2">
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>
@@ -127,7 +129,7 @@
         showCard: false,
         showLabelMenu: false,
         showDescriptionEditor: false,
-        labels: ["success", "warning", "danger", "info", "primary"]
+        labels: ["success", "warning", "danger", "info", "primary", "secondary"]
       }
     },
     methods: {
@@ -145,22 +147,35 @@
       closeCard() {
         this.showCard = false
         this.showLabelMenu = false
+        this.showDescriptionEditor = false
       },
       updateCard: debounce((card) => {
         axios
-        .patch(`/api/cards/${card._id.$oid}`, {
-          list_id: card.list_id.$oid,
-          position: card.position,
-          title: card.title,
-          description: card.description,
-          labels: card.labels,
-          checklist: card.checklist,
-          due_date: card.due_date
+          .patch(`/api/cards/${card._id.$oid}`, {
+            list_id: card.list_id.$oid,
+            position: card.position,
+            title: card.title,
+            description: card.description,
+            labels: card.labels,
+            checklist: card.checklist,
+            due_date: card.due_date
         })
         .then(response => (
           console.log(response)
         ))
       }, 250),
+      deleteCard(card) {
+        if (confirm("Are you sure you want to delete this card?")) {
+          let idx = this.cards.indexOf(card);
+          this.cards.splice(idx, 1);
+          this.showCard = false;
+          this.card = null;
+          axios
+            .delete(`/api/cards/${card._id.$oid}`).then(response => (
+            console.log(response)
+          ))
+        }
+      },
       toggleLabelMenu() {
         this.showLabelMenu = !this.showLabelMenu
       },

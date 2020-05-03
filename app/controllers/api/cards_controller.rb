@@ -31,6 +31,13 @@ module Api
       render json: card, status: 200
     end
 
+    def destroy
+      card = Card.find params[:id]
+      card.destroy
+
+      render json: {}, status: 200
+    end
+
     def permitted_params
       params.require(:card).permit(:list_id, :position, :title, :description, :id, :due_date, checklist: {}, labels: [])
     end
