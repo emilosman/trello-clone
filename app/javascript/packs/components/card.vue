@@ -4,7 +4,7 @@
       <transition-group type="transition" :name="'card-list'">
         <li class="list-group-item list-group-item-action mb-2" v-for="card in cards" :key="card.position" @click="openCard(card)">
           <div>
-            <div class="badge badge-pill mr-1 mb-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
+            <div class="badge badge-pill mr-1 mb-1" v-bind:class="'badge-' + label" v-for="label in card.labels" :key="label">
               {{label}}
             </div>
           </div>
@@ -42,7 +42,7 @@
                   <div class="col-9">
                     <div v-if="card.labels && card.labels.length > 0" class="d-inline-block mr-4 mb-4">
                       <h6>Labels</h6>
-                      <span class="badge badge-pill mr-1" v-bind:class="'badge-' + label" v-for="label in card.labels">
+                      <span class="badge badge-pill mr-1" v-bind:class="'badge-' + label" v-for="label in card.labels" :key="label">
                         {{label}}
                       </span>
                     </div>
@@ -82,7 +82,7 @@
                         </button>
                       </button>
                       <div v-if="showLabelMenu" class="dropdown-menu py-0">
-                        <a v-for="label in labels" class="dropdown-item text-white" v-bind:class="'bg-' + label" @click="toggleLabel(label)">
+                        <a v-for="label in labels" class="dropdown-item text-white" v-bind:class="'bg-' + label" @click="toggleLabel(label)" :key="label">
                           <span v-if="card.labels.indexOf(label) > -1" >✓</span>
                           {{label}}
                         </a>
