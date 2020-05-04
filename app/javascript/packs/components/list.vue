@@ -2,7 +2,7 @@
   <draggable :move="onMoveList" handle=".card-header">
     <transition-group class="row px-2" type="transition" :name="'list-list'">
       <div class="col-2" v-for="list in lists" :key="list.position">
-        <div class="card bg-light mr-2">
+        <div class="card bg-light">
           <div class="card-header">
             <input @change="updateList(list)" type="text" v-model="list.title" class="transparent"/>
           </div>
