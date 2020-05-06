@@ -1,6 +1,6 @@
 <template>
   <div>
-    <draggable tag="ul" class="list-group list-group-flush" :list="cards" @end="updateOrder">
+    <draggable tag="ul" class="list-group list-group-flush" :list="cards" @end="updateCardOrder">
       <transition-group type="transition" :name="'card-list'">
         <li class="list-group-item list-group-item-action mb-2" v-for="card in cards" :key="card.position" @click="openCard(card)">
           <div>
@@ -142,7 +142,7 @@
         this.showLabelMenu = false
         this.showDescriptionEditor = false
       },
-      updateOrder() {
+      updateCardOrder() {
         let orderedCards = this.cards.map((card, index, arr) => {
           return {
             'id': card._id.$oid,

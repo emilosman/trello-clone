@@ -45,7 +45,7 @@
       },
       createCard(list) {
         this.newCard.list_id.$oid = list._id.$oid
-        this.newCard.position = list.cards.length
+        this.newCard.position = list.ordered_cards.length + 1
 
         axios
           .post(`/api/cards`, {
@@ -55,7 +55,7 @@
           })
           .then(response => (
             this.newCard = response.data,
-            list.cards.push(this.newCard),
+            list.ordered_cards.push(this.newCard),
             this.showNewCard = false,
             this.newCard = {
               title: null,
