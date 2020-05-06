@@ -9,5 +9,5 @@ class Card
 
   belongs_to :list
 
-  scope :by_position, ->{ order("position ASC") }
+  scope :by_position, -> { order("position ASC") }
 end
