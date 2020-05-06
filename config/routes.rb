@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   
   namespace :api do
     resources :boards
-    resources :cards
+    resources :cards do
+      collection do
+        post 'card_order'
+      end
+    end
     resources :lists
   end
 

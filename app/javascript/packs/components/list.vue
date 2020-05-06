@@ -7,7 +7,7 @@
             <input @change="updateList(list)" type="text" v-model="list.title" class="transparent"/>
           </div>
           <div class="list-body">
-            <card :cards="list.cards"></card>
+            <card :cards="list.ordered_cards"></card>
           </div>
           <card-footer :list=list></card-footer>
         </div>
@@ -33,13 +33,13 @@
       },
       updateList: debounce((list) => {
         axios
-        .patch(`/api/lists/${list._id.$oid}`, {
-          position: list.position,
-          title: list.title,
-        })
-        .then(response => (
-          console.log(response)
-        ))
+          .patch(`/api/lists/${list._id.$oid}`, {
+            position: list.position,
+            title: list.title,
+          })
+          .then(response => (
+            console.log(response)
+          ))
       }, 250)
     },
     components: {

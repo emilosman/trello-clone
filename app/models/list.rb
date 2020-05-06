@@ -5,4 +5,8 @@ class List
 
   belongs_to :board
   has_many :cards
+
+  def ordered_cards
+    cards.by_position
+  end
 end

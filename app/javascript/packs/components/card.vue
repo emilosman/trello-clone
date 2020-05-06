@@ -1,6 +1,6 @@
 <template>
   <div>
-    <draggable tag="ul" class="list-group list-group-flush" :move="onMoveCard" @end="onEnd">
+    <draggable tag="ul" class="list-group list-group-flush" :list="cards" @end="updateOrder">
       <transition-group type="transition" :name="'card-list'">
         <li class="list-group-item list-group-item-action mb-2" v-for="card in cards" :key="card.position" @click="openCard(card)">
           <div>
@@ -129,17 +129,10 @@
         showCard: false,
         showLabelMenu: false,
         showDescriptionEditor: false,
-        labels: ["success", "warning", "danger", "info", "primary", "secondary"]
+        labels: ["success", "warning", "danger", "info", "primary", "secondary"],
       }
     },
     methods: {
-      //movement
-      onMoveCard(card) {
-        console.log(card)
-      },
-      onEnd(e) {
-        console.log(e)
-      },
       openCard(card) {
         this.showCard = true
         this.card = card
@@ -148,6 +141,21 @@
         this.showCard = false
         this.showLabelMenu = false
         this.showDescriptionEditor = false
+      },
+      updateOrder() {
+        let orderedCards = this.cards.map((card, index, arr) => {
+          return {
+            'id': card._id.$oid,
+            'position': index
+          }
+        })
+        axios
+          .post(`/api/cards/card_order`, {
+            ordered_cards: orderedCards
+          })
+          .then(response => (
+            console.log(response)
+          ))
       },
       updateCard: debounce((card) => {
         axios

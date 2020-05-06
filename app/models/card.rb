@@ -8,4 +8,6 @@ class Card
   field :checklist, type: Hash
 
   belongs_to :list
+
+  scope :by_position, ->{ order("position ASC") }
 end

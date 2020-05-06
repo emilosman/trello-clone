@@ -38,6 +38,16 @@ module Api
       render json: {}, status: 200
     end
 
+    def card_order
+      if params[:ordered_cards]
+        params[:ordered_cards].each do |card|
+          Card.find(card['id']).update_attributes(position: card['position'])
+        end
+      end
+
+      render json: {}, status: 200
+    end
+
     def permitted_params
       params.require(:card).permit(:list_id, :position, :title, :description, :id, :due_date, checklist: {}, labels: [])
     end
