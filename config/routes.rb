@@ -12,7 +12,12 @@ Rails.application.routes.draw do
         post 'card_order'
       end
     end
-    resources :lists
+
+    resources :lists do
+      collection do
+        post 'list_order'
+      end
+    end
   end
 
   root to: 'boards#index'

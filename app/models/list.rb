@@ -6,6 +6,8 @@ class List
   belongs_to :board
   has_many :cards
 
+  default_scope  ->{ order("position ASC") }
+
   def ordered_cards
     cards.by_position
   end

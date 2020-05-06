@@ -1,5 +1,5 @@
 <template>
-  <draggable :move="onMoveList" handle=".card-header">
+  <draggable handle=".card-header" :list="lists" @end="updateListOrder">
     <transition-group class="row px-2" type="transition" :name="'list-list'">
       <div class="col-2" v-for="list in lists" :key="list.position">
         <div class="card bg-light">
@@ -28,9 +28,6 @@
       lists: Array
     },
     methods: {
-      onMoveList(list) {
-        console.log(list)
-      },
       updateList: debounce((list) => {
         axios
           .patch(`/api/lists/${list._id.$oid}`, {
@@ -40,7 +37,23 @@
           .then(response => (
             console.log(response)
           ))
-      }, 250)
+      }, 250),
+
+      updateListOrder() {
+        let orderedLists = this.lists.map((list, index, arr) => {
+          return {
+            'id': list._id.$oid,
+            'position': index
+          }
+        })
+        axios
+          .post(`/api/lists/list_order`, {
+            ordered_lists: orderedLists
+          })
+          .then(response => (
+            console.log(response)
+          ))
+      },
     },
     components: {
       draggable,

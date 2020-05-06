@@ -3,4 +3,8 @@ class Board
   field :title, type: String
 
   has_many :lists
+
+  def ordered_lists
+    lists.by_position
+  end
 end
